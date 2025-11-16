@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>KYTE – Client & Writer Portal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div class="page">
+  <header>
+    <div class="shell nav">
+      <div class="nav-left">
+        <div class="logo-mark">K</div>
+        <div>
+          <div class="logo-text-primary">KYTE</div>
+          <div class="logo-text-sub">Publishing · Creative · Asia</div>
+        </div>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="highlights.html">Highlights</a>
+        <a href="services.html">Services</a>
+        <a href="roster.html">Roster</a>
+        <a href="client-portal.html">Client Portal</a>
+      </nav>
+      <div class="nav-cta">
+        <a class="btn btn-outline" href="mailto:royalties@kyte.kr">Royalties</a>
+        <button class="nav-toggle" aria-label="Toggle navigation">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="shell">
+      <section>
+        <div class="section-header">
+          <div class="section-title">
+            <span class="sub">Portal</span>
+            <span>Client &amp; writer login</span>
+          </div>
+          <p class="section-description">
+            Prototype of a secure area where writers and clients can log in to view royalty
+            statements, top‑earning songs and briefs. This version uses demo data only and
+            can later be wired to a database (e.g. Supabase, Firebase or Airtable).
+          </p>
+        </div>
+
+        <div class="portal-layout">
+          <div class="portal-card">
+            <h3 class="card-title">Log in</h3>
+            <p class="card-meta" style="margin-bottom:10px;">
+              Demo accounts (for testing only):
+              <br /><strong>writer@example.com / demo123</strong> (Writer)
+              <br /><strong>client@example.com / demo123</strong> (Client)
+            </p>
+            <form id="loginForm">
+              <div class="field">
+                <label for="userType">Role</label>
+                <select id="userType" required>
+                  <option value="writer">Writer</option>
+                  <option value="client">Client</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" type="email" placeholder="you@example.com" required />
+              </div>
+              <div class="field">
+                <label for="password">Password</label>
+                <input id="password" type="password" placeholder="••••••••" required />
+              </div>
+              <button type="submit" class="btn btn-primary" style="margin-top:6px;">Log in</button>
+              <p id="loginMessage" class="card-meta" style="margin-top:8px;"></p>
+            </form>
+
+            <div class="embed-block">
+              <strong>Implementation suggestion:</strong>
+              <ul style="margin-top:4px; padding-left:16px;">
+                <li>Use Supabase / Firebase Auth for secure logins.</li>
+                <li>Store royalty statements as PDFs in S3 / Supabase storage, linked by writer ID.</li>
+                <li>Store royalty data per work (song ID, territory, period, net amount) in a table.</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="portal-card" id="dashboard" style="display:none;">
+            <h3 class="card-title">Dashboard</h3>
+            <p class="card-meta" id="welcomeText"></p>
+
+            <div class="table-shell" style="margin-top:14px;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Statement period</th>
+                    <th>Territory</th>
+                    <th>Total (KRW)</th>
+                    <th>Download</th>
+                  </tr>
+                </thead>
+                <tbody id="statementTableBody">
+                  <!-- Filled by JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <div class="chart-row">
+              <p class="card-meta" style="margin-top:12px; margin-bottom:4px;">
+                Top earning works (demo data)
+              </p>
+              <div class="table-shell">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Song</th>
+                      <th>Role</th>
+                      <th>Share</th>
+                      <th>YTD (KRW)</th>
+                    </tr>
+                  </thead>
+                  <tbody id="topSongsBody">
+                    <!-- Filled by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="chart-row">
+              <p class="card-meta" style="margin-top:12px; margin-bottom:4px;">
+                Usage by territory (demo data)
+              </p>
+              <div class="table-shell">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Territory</th>
+                      <th>Share of total</th>
+                      <th>Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody id="territoryBody">
+                    <!-- Filled by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="chart-row" id="briefsBlock" style="display:none;">
+              <p class="card-meta" style="margin-top:12px; margin-bottom:4px;">
+                Active writing briefs (writers only – demo)
+              </p>
+              <div class="table-shell">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Brief</th>
+                      <th>Deadline</th>
+                      <th>Type</th>
+                    </tr>
+                  </thead>
+                  <tbody id="briefsBody">
+                    <!-- Filled by JS -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="embed-block" style="margin-top:20px;">
+          <strong>Production note:</strong>
+          <ul style="margin-top:4px; padding-left:16px;">
+            <li><strong>Authentication:</strong> Supabase Auth or Firebase Authentication.</li>
+            <li><strong>Royalty data:</strong> store in a table with fields like <code>writer_id</code>, <code>work_id</code>, <code>territory</code>, <code>period</code>, <code>amount_net</code>, <code>cmotype</code>.</li>
+            <li><strong>Statements:</strong> upload PDFs to storage (e.g. <code>statements/{writer_id}/{year}-{period}.pdf</code>) and store their public URLs.</li>
+            <li><strong>Visualisation:</strong> fetch data via a small API / edge function and fill these tables or use a JS chart library later.</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="shell footer-inner">
+      <div>© KYTE Co., Ltd. All rights reserved.</div>
+      <div>Secure access for roster &amp; partners</div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // Simple demo "backend" in JS
+  const demoUsers = {
+    "writer@example.com": {
+      password: "demo123",
+      type: "writer",
+      name: "KYTE Writer",
+      statements: [
+        { period: "2025 Q2", territory: "Worldwide", total: "3,420,000", url: "#" },
+        { period: "2025 Q1", territory: "Asia ex‑JP", total: "2,180,000", url: "#" }
+      ],
+      topSongs: [
+        { title: "Perfume", role: "Composer", share: "50%", amount: "1,200,000" },
+        { title: "Getup", role: "Co‑writer", share: "33.3%", amount: "980,000" },
+        { title: "AGAPE (album)", role: "Producer", share: "25%", amount: "720,000" }
+      ],
+      territories: [
+        { name: "Korea", share: "52%", notes: "Domestic DSP & TV" },
+        { name: "Europe", share: "28%", notes: "CMOs + sync" },
+        { name: "North America", share: "15%", notes: "Streaming & YouTube" },
+        { name: "Other Asia", share: "5%", notes: "Emerging usage" }
+      ],
+      briefs: [
+        { title: "K‑pop girl group – mini album (Spring 2026)", deadline: "2025‑12‑15", type: "Album cut" },
+        { title: "Rom‑com series OST ballad", deadline: "2026‑01‑10", type: "TV / OST" }
+      ]
+    },
+    "client@example.com": {
+      password: "demo123",
+      type: "client",
+      name: "Label / Client",
+      statements: [
+        { period: "2025 Q2", territory: "Korea", total: "9,800,000", url: "#" },
+        { period: "2025 Q1", territory: "Global", total: "11,320,000", url: "#" }
+      ],
+      topSongs: [
+        { title: "Youth Without Youth", role: "Master owner", share: "100%", amount: "4,300,000" },
+        { title: "Revolution", role: "Master owner", share: "100%", amount: "3,120,000" }
+      ],
+      territories: [
+        { name: "Korea", share: "64%", notes: "Core market" },
+        { name: "Japan", share: "18%", notes: "Physical & streaming" },
+        { name: "EU", share: "12%", notes: "Live + streaming" },
+        { name: "US / Other", share: "6%", notes: "Growing" }
+      ],
+      briefs: []
+    }
+  };
+
+  const loginForm = document.getElementById("loginForm");
+  const loginMessage = document.getElementById("loginMessage");
+  const dashboard = document.getElementById("dashboard");
+  const welcomeText = document.getElementById("welcomeText");
+  const statementTableBody = document.getElementById("statementTableBody");
+  const topSongsBody = document.getElementById("topSongsBody");
+  const territoryBody = document.getElementById("territoryBody");
+  const briefsBlock = document.getElementById("briefsBlock");
+  const briefsBody = document.getElementById("briefsBody");
+
+  loginForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const email = document.getElementById("email").value.trim().toLowerCase();
+    const pw = document.getElementById("password").value.trim();
+    const userType = document.getElementById("userType").value;
+
+    const user = demoUsers[email];
+
+    if (!user || user.password !== pw || user.type !== userType) {
+      loginMessage.textContent = "Invalid credentials (demo). Try writer@example.com / client@example.com with password demo123.";
+      loginMessage.style.color = "#f97373";
+      dashboard.style.display = "none";
+      return;
+    }
+
+    loginMessage.textContent = "";
+    dashboard.style.display = "block";
+    welcomeText.textContent = `Welcome, ${user.name}. This dashboard currently shows demo data only.`;
+
+    // Fill statements
+    statementTableBody.innerHTML = "";
+    user.statements.forEach((s) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${s.period}</td>
+        <td>${s.territory}</td>
+        <td>${s.total}</td>
+        <td><a href="${s.url}">Download PDF</a></td>
+      `;
+      statementTableBody.appendChild(tr);
+    });
+
+    // Fill top songs
+    topSongsBody.innerHTML = "";
+    user.topSongs.forEach((s) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${s.title}</td>
+        <td>${s.role}</td>
+        <td>${s.share}</td>
+        <td>${s.amount}</td>
+      `;
+      topSongsBody.appendChild(tr);
+    });
+
+    // Fill territories
+    territoryBody.innerHTML = "";
+    user.territories.forEach((t) => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${t.name}</td>
+        <td>${t.share}</td>
+        <td>${t.notes}</td>
+      `;
+      territoryBody.appendChild(tr);
+    });
+
+    // Briefs (writers only)
+    briefsBody.innerHTML = "";
+    if (userType === "writer" && user.briefs && user.briefs.length) {
+      briefsBlock.style.display = "block";
+      user.briefs.forEach((b) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${b.title}</td>
+          <td>${b.deadline}</td>
+          <td>${b.type}</td>
+        `;
+        briefsBody.appendChild(tr);
+      });
+    } else {
+      briefsBlock.style.display = "none";
+    }
+  });
+</script>
+</body>
+</html>
