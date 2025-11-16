@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>KYTE – Creative Agency & Talent Roster</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="KYTE is a creative agency and talent roster connecting brands with artists, creators and storytellers across Asia-Pacific and beyond." />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #050816;
+      --bg-alt: #070b1f;
+      --accent: #f97316;
+      --accent-soft: rgba(249, 115, 22, 0.12);
+      --accent-alt: #22c55e;
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --border: rgba(148, 163, 184, 0.2);
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --radius-lg: 18px;
+      --radius-xl: 28px;
+      --shadow-soft: 0 18px 45px rgba(15, 23, 42, 0.8);
+      --nav-height: 72px;
+      --max-width: 1120px;
+      --transition: 200ms ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top, #1d283a 0, #020617 40%, #020617 100%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page {
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .page::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(56, 189, 248, 0.11), transparent 55%),
+        radial-gradient(circle at 90% 10%, rgba(249, 115, 22, 0.14), transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    .page::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0, transparent 30%, rgba(0, 0, 0, 0.85) 100%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Header / Nav */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(to bottom, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.4));
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: var(--nav-height);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 30% 0, rgba(248, 250, 252, 0.1), transparent 60%);
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.9), 0 15px 30px rgba(15, 23, 42, 0.9);
+      font-weight: 700;
+      font-size: 16px;
+      letter-spacing: 0.06em;
+    }
+
+    .logo-text-primary {
+      font-weight: 600;
+      font-size: 18px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .logo-text-sub {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 26px;
+      font-size: 14px;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      position: relative;
+      padding-bottom: 2px;
+      transition: color var(--transition);
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(to right, var(--accent), var(--accent-alt));
+      transition: width var(--transition);
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-links a:hover::after {
+      width: 18px;
+    }
+
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      border: 1px solid transparent;
+      background: rgba(15, 23, 42, 0.75);
+      color: var(--text);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-alt));
+      box-shadow: 0 14px 34px rgba(248, 250, 252, 0.08);
+    }
+
+    .btn-primary span.icon {
+      font-size: 16px;
+    }
+
+    .btn-outline {
+      border-color: rgba(148, 163, 184, 0.6);
+      background: transparent;
+      color: var(--muted);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.05);
+      transform: translateY(-1px);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.8);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--text);
+      background: rgba(15, 23, 42, 0.7);
+    }
+
+    .nav-toggle {
+      display: none;
+      border: none;
+      background: transparent;
+      font-size: 20px;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    /* Hero */
+
+    .hero {
+      padding: 64px 0 72px;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.2fr);
+      gap: 48px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent-alt);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent-alt);
+    }
+
+    .hero-title {
+      font-size: clamp(34px, 4vw, 40px);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 14px;
+    }
+
+    .hero-title span.accent {
+      background: linear-gradient(120deg, #f97316, #22c55e, #38bdf8);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .hero-subtitle-kr {
+      font-size: 13px;
+      color: rgba(148, 163, 184, 0.9);
+      margin-bottom: 28px;
+      line-height: 1.6;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .hero-footnote {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .pill {
+      font-size: 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      padding: 4px 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: rgba(15, 23, 42, 0.8);
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 260px;
+    }
+
+    .hero-card {
+      position: relative;
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at top left, rgba(248, 250, 252, 0.06), transparent 55%), var(--card-bg);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      box-shadow: var(--shadow-soft);
+      padding: 18px 18px 16px;
+      overflow: hidden;
+    }
+
+    .hero-card-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      align-items: center;
+    }
+
+    .hero-tagline {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .hero-badge {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(249, 115, 22, 0.2), rgba(34, 197, 94, 0.25));
+      border: 1px solid rgba(248, 250, 252, 0.08);
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .stat {
+      padding: 8px 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: radial-gradient(circle at top left, rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.95));
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .stat-value {
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .hero-roster-preview {
+      margin-top: 8px;
+      border-radius: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      background: rgba(15, 23, 42, 0.9);
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow: hidden;
+    }
+
+    .avatar-group {
+      display: flex;
+      align-items: center;
+    }
+
+    .avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      border: 1px solid rgba(15, 23, 42, 0.9);
+      background: linear-gradient(135deg, #0f172a, #111827);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      margin-left: -6px;
+    }
+
+    .avatar:first-child {
+      margin-left: 0;
+    }
+
+    .avatar-count {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .hero-highlight {
+      font-size: 11px;
+      color: var(--muted);
+      margin-left: auto;
+      white-space: nowrap;
+    }
+
+    .hero-orbit {
+      position: absolute;
+      right: -30px;
+      top: -32px;
+      width: 180px;
+      height: 180px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: radial-gradient(circle at 30% 0%, rgba(248, 250, 252, 0.1), transparent 55%);
+      opacity: 0.7;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 16px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* Generic sections */
+
+    section {
+      padding: 40px 0;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      letter-spacing: -0.02em;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .section-title span.sub {
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .section-title span.kr {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .section-description {
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 380px;
+      line-height: 1.7;
+    }
+
+    .badge-soft {
+      font-size: 11px;
+      border-radius: 999px;
+      padding: 4px 10px;
+      background: var(--accent-soft);
+      border: 1px solid rgba(248, 250, 252, 0.08);
+      color: rgba(248, 250, 252, 0.85);
+    }
+
+    /* Roster */
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      position: relative;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.7), rgba(15, 23, 42, 0.96));
+      padding: 14px;
+      overflow: hidden;
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.5);
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition), background var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(248, 250, 252, 0.25);
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
+      background: radial-gradient(circle at top left, rgba(248, 250, 252, 0.07), rgba(15, 23, 42, 0.96));
+    }
+
+    .card-tag {
+      font-size: 11px;
+      color: var(--muted);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .card-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .card-meta {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    .chip {
+      font-size: 11px;
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    .chip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #22c55e;
+      margin-right: 6px;
+      display: inline-block;
+    }
+
+    .card-overlay-label {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+    }
+
+    /* Catalog & Cuts */
+
+    .cut-thumb {
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.9), #020617);
+      height: 130px;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 10px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .cut-play {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid rgba(248, 250, 252, 0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    .cut-meta-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* Services */
+
+    .service-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    .service-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .service-body {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+
+    .service-meta {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* About */
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .about-card {
+      border-radius: var(--radius-lg);
+      padding: 16px 16px 14px;
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.98));
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.6);
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .about-card strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .about-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .about-pill {
+      border-radius: 999px;
+      padding: 6px 10px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      font-size: 11px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .client-logos {
+      border-radius: var(--radius-lg);
+      border: 1px dashed rgba(148, 163, 184, 0.5);
+      padding: 14px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .client-logos-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .client-logo-chip {
+      padding: 5px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 11px;
+      background: rgba(15, 23, 42, 0.9);
+    }
+
+    /* Contact */
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 28px;
+    }
+
+    .contact-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at top, rgba(15, 23, 42, 0.78), rgba(15, 23, 42, 0.98));
+      padding: 16px;
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.7);
+    }
+
+    .contact-form-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .field {
+      margin-bottom: 12px;
+    }
+
+    .field label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.95);
+      padding: 9px 10px;
+      font-size: 13px;
+      color: var(--text);
+      outline: none;
+      resize: vertical;
+      min-height: 0;
+    }
+
+    .field input::placeholder,
+    .field textarea::placeholder {
+      color: rgba(148, 163, 184, 0.7);
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.4);
+    }
+
+    .contact-meta {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+
+    .contact-list {
+      font-size: 12px;
+      color: var(--muted);
+      list-style: none;
+      margin-bottom: 14px;
+    }
+
+    .contact-list li {
+      margin-bottom: 6px;
+    }
+
+    .contact-social {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 8px;
+      font-size: 12px;
+    }
+
+    .contact-social a {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 5px 10px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .contact-social a:hover {
+      border-color: var(--accent);
+      color: var(--text);
+      background: rgba(15, 23, 42, 0.85);
+    }
+
+    /* Footer */
+
+    footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.4);
+      padding: 18px 0 26px;
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 30px;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+    }
+
+    /* Responsive */
+
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 32px;
+      }
+
+      .hero-visual {
+        order: -1;
+      }
+
+      .about-layout,
+      .contact-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .grid-3 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        padding: 0 16px;
+      }
+
+      .nav-links,
+      .nav-cta {
+        display: none;
+      }
+
+      .nav-toggle {
+        display: block;
+      }
+
+      .nav-mobile {
+        position: absolute;
+        top: var(--nav-height);
+        left: 0;
+        right: 0;
+        background: rgba(15, 23, 42, 0.98);
+        border-bottom: 1px solid rgba(148, 163, 184, 0.4);
+        backdrop-filter: blur(18px);
+        padding: 12px 20px 16px;
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        z-index: 30;
+      }
+
+      .nav-mobile a {
+        font-size: 14px;
+        color: var(--muted);
+        padding: 5px 0;
+      }
+
+      .nav-mobile .btn {
+        margin-top: 6px;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .nav-mobile.open {
+        display: flex;
+      }
+
+      .grid-3,
+      .grid-2 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero {
+        padding-top: 42px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <header>
+    <div class="shell">
+      <nav class="nav">
+        <div class="nav-left">
+          <div class="logo-mark">K</div>
+          <div>
+            <div class="logo-text-primary">KYTE</div>
+            <div class="logo-text-sub">CREATIVE AGENCY</div>
+          </div>
+        </div>
+        <div class="nav-links">
+          <a href="#roster">Roster</a>
+          <a href="#catalog">Catalog & Cuts</a>
+          <a href="#services">Services</a>
+          <a href="#about">About</a>
+          <a href="#contact">Contact</a>
+        </div>
+        <div class="nav-cta">
+          <button class="btn btn-outline" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+            Deck / Media Kit
+          </button>
+          <button class="btn btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+            <span>Book Talent</span>
+            <span class="icon">↗</span>
+          </button>
+          <button class="nav-toggle" aria-label="Toggle navigation" id="navToggle">☰</button>
+        </div>
+      </nav>
+      <div class="nav-mobile" id="navMobile">
+        <a href="#roster">Roster</a>
+        <a href="#catalog">Catalog & Cuts</a>
+        <a href="#services">Services</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <button class="btn btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">
+          Book Talent
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="shell">
+        <div class="hero-inner">
+          <div>
+            <div class="eyebrow">Creative agency & talent roster · Asia-Pacific</div>
+            <h1 class="hero-title">
+              We connect <span class="accent">artists, creators, and brands</span> across Asia and beyond.
+            </h1>
+            <p class="hero-subtitle">
+              KYTE curates a roster of forward-thinking talent, builds campaigns end-to-end, and handles the details — from casting and production to delivery and rights.
+            </p>
+            <p class="hero-subtitle-kr">
+              KYTE는 아티스트·크리에이터·브랜드를 잇는 크리에이티브 에이전시이자 탈렌트 로스터입니다.
+              아시아를 중심으로 글로벌 캠페인 기획, 캐스팅, 제작, 라이선스까지 원스톱으로 지원합니다.
+            </p>
+            <div class="hero-actions">
+              <button class="btn btn-primary" onclick="document.getElementById('roster').scrollIntoView({behavior:'smooth'})">
+                View roster
+              </button>
+              <button class="btn btn-outline" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">
+                Explore catalog & cuts
+              </button>
+            </div>
+            <div class="hero-footnote">
+              <div class="pill">Seoul · Asia-Pacific · Europe</div>
+              <span>Multilingual team · Artist-friendly deals · Brand-safe execution</span>
+            </div>
+          </div>
+
+          <div class="hero-visual">
+            <div class="hero-card">
+              <div class="hero-card-header">
+                <div>
+                  <div class="hero-tagline">Live roster snapshot</div>
+                  <div class="hero-tagline" style="font-size:10px;">Editable in code – replace with your real stats.</div>
+                </div>
+                <div class="hero-badge">
+                  2025 BOOKINGS OPEN
+                </div>
+              </div>
+
+              <div class="hero-stats">
+                <div class="stat">
+                  <div class="stat-label">Talent</div>
+                  <div class="stat-value">+24</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-label">Markets</div>
+                  <div class="stat-value">8</div>
+                </div>
+                <div class="stat">
+                  <div class="stat-label">Campaigns</div>
+                  <div class="stat-value">120+</div>
+                </div>
+              </div>
+
+              <div class="hero-roster-preview">
+                <div class="avatar-group">
+                  <div class="avatar">TL</div>
+                  <div class="avatar">KR</div>
+                  <div class="avatar">VN</div>
+                  <div class="avatar">DE</div>
+                </div>
+                <div class="avatar-count">Multilingual creators across KR · EU · SEA</div>
+                <div class="hero-highlight">Casting <strong>in 72h</strong> · on-brand</div>
+              </div>
+
+              <div class="hero-orbit">
+                <div>
+                  Preferred partner for brands entering<br />
+                  <strong>Asia-Pacific</strong>.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Roster -->
+    <section id="roster">
+      <div class="shell">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="sub">Roster</span>
+            Curated talent for campaigns, content & live.
+            <span class="kr">모델·아티스트·크리에이터 로스터</span>
+          </div>
+          <div class="section-description">
+            KYTE represents a focused roster of models, musicians, creators and storytellers.
+            We prioritise diversity, professionalism and long-term partnerships with both talent and brands.
+            <div style="margin-top:10px;">
+              <span class="badge-soft">Replace these cards with real roster entries.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-3">
+          <!-- Example roster card 1 -->
+          <article class="card">
+            <span class="card-overlay-label">KR · EN</span>
+            <div class="card-tag">Model · Content Creator</div>
+            <h3 class="card-title">Artist Name / Placeholder</h3>
+            <p class="card-meta">
+              Based in Seoul · Social-first campaigns, lifestyle & fashion · Strong presence on IG/TikTok.
+            </p>
+            <div class="card-footer">
+              <div>
+                <span class="chip">
+                  <span class="chip-dot"></span>Available for Q1–Q4
+                </span>
+              </div>
+              <div>Height / Measurements / Key notes</div>
+            </div>
+          </article>
+
+          <!-- Example roster card 2 -->
+          <article class="card">
+            <span class="card-overlay-label">KR · DE</span>
+            <div class="card-tag">Musician · Brand Collaborator</div>
+            <h3 class="card-title">Artist Name / Placeholder</h3>
+            <p class="card-meta">
+              Touring experience in Europe & Asia. Ideal for performance-driven activations and music-led stories.
+            </p>
+            <div class="card-footer">
+              <div><span class="chip">Live / Studio · Brand safe</span></div>
+              <div>Genres · BPM · Vibe tags</div>
+            </div>
+          </article>
+
+          <!-- Example roster card 3 -->
+          <article class="card">
+            <span class="card-overlay-label">EN · VN</span>
+            <div class="card-tag">Director · Photographer</div>
+            <h3 class="card-title">Artist Name / Placeholder</h3>
+            <p class="card-meta">
+              Concept-driven visuals · Hybrid photo/video · Comfortable across KR, VN and EU sets.
+            </p>
+            <div class="card-footer">
+              <div><span class="chip">Treatment · Storyboard · Shoot</span></div>
+              <div>Examples: Product / Fashion / Live</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Catalog & Cuts -->
+    <section id="catalog">
+      <div class="shell">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="sub">Catalog & Cuts</span>
+            A living archive of campaigns, edits & deliverables.
+            <span class="kr">캠페인·컷·레퍼런스 카탈로그</span>
+          </div>
+          <div class="section-description">
+            Showcase selected work to clients: hero shots, behind-the-scenes stills and short-form edits.
+            You can link out to full decks, PDFs or private galleries for partners.
+          </div>
+        </div>
+
+        <div class="grid grid-3">
+          <!-- Example cut 1 -->
+          <article class="card">
+            <div class="cut-thumb">
+              <div>
+                SS25 Editorial · Seoul
+                <div style="margin-top:4px;font-size:10px;">
+                  Photo / video campaign – street & studio. Replace this with a thumbnail or still.
+                </div>
+              </div>
+              <div class="cut-play">▶</div>
+            </div>
+            <div class="card-title">Brand Name / Capsule Collection</div>
+            <div class="cut-meta-row">
+              <span>Talent: Name 1, Name 2</span>
+              <span>KR · EN · Online / OOH</span>
+            </div>
+          </article>
+
+          <!-- Example cut 2 -->
+          <article class="card">
+            <div class="cut-thumb">
+              <div>
+                Music-driven spot · APAC
+                <div style="margin-top:4px;font-size:10px;">
+                  30s + 15s edits · digital and social cut-downs.
+                </div>
+              </div>
+              <div class="cut-play">▶</div>
+            </div>
+            <div class="card-title">Streaming / Tech Partner Campaign</div>
+            <div class="cut-meta-row">
+              <span>Usage: Online · TV · Events</span>
+              <span>Year · Territory</span>
+            </div>
+          </article>
+
+          <!-- Example cut 3 -->
+          <article class="card">
+            <div class="cut-thumb">
+              <div>
+                Creator collab series
+                <div style="margin-top:4px;font-size:10px;">
+                  Short-form vertical content for TikTok / IG Reels.
+                </div>
+              </div>
+              <div class="cut-play">▶</div>
+            </div>
+            <div class="card-title">Brand Name / Always-on Social</div>
+            <div class="cut-meta-row">
+              <span>Deliverables: x posts, x stories</span>
+              <span>Engagement / KPI notes</span>
+            </div>
+          </article>
+        </div>
+
+        <div style="margin-top:20px; display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; align-items:center;">
+          <div style="font-size:12px; color:var(--muted);">
+            For sensitive projects, you can host case studies behind a password and only share with approved partners.
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn btn-outline">Request full case study deck</button>
+            <button class="btn btn-outline">Download media pack (PDF)</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Services -->
+    <section id="services">
+      <div class="shell">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="sub">Services</span>
+            End-to-end support from casting to delivery.
+            <span class="kr">캐스팅부터 제작·납품까지 원스톱</span>
+          </div>
+          <div class="section-description">
+            Whether you’re entering a new market, launching a campaign or producing content at scale,
+            KYTE can plug in at any stage or run the entire pipeline.
+          </div>
+        </div>
+
+        <div class="grid grid-4 grid-2">
+          <article class="card">
+            <div class="service-icon">🎯</div>
+            <div class="service-title">Talent scouting & management</div>
+            <div class="service-body">
+              Roster strategy, casting, availability and negotiations.
+              We focus on transparent, artist-friendly deals that work for brands long-term.
+            </div>
+            <div class="service-meta">Usage: campaigns, editorial, events, content series.</div>
+          </article>
+
+          <article class="card">
+            <div class="service-icon">📸</div>
+            <div class="service-title">Creative direction & production</div>
+            <div class="service-body">
+              Concept, treatment, shot list, production, crew, locations and post.
+              Single shoot days to multi-market campaigns.
+            </div>
+            <div class="service-meta">Photo · video · live · hybrid.</div>
+          </article>
+
+          <article class="card">
+            <div class="service-icon">🌏</div>
+            <div class="service-title">Market entry & localisation</div>
+            <div class="service-body">
+              Local insight for Korea, wider APAC and EU.
+              Language, casting, cultural nuance and platform mix tailored to each market.
+            </div>
+            <div class="service-meta">Korean, English, German, Vietnamese and more.</div>
+          </article>
+
+          <article class="card">
+            <div class="service-icon">🤝</div>
+            <div class="service-title">Brand partnerships & consulting</div>
+            <div class="service-body">
+              Strategic matchmaking between brands and talent, long-term collabs,
+              and retained creative support for studios, labels and agencies.
+            </div>
+            <div class="service-meta">Available for retainers & one-off projects.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+      <div class="shell">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="sub">About</span>
+            KYTE is built by and for creatives.
+            <span class="kr">아티스트와 브랜드를 동시에 이해하는 팀</span>
+          </div>
+          <div class="section-description">
+            Born between Seoul and Europe, KYTE is designed for cross-border collaboration:
+            flexible enough for independent projects, robust enough for global campaigns.
+          </div>
+        </div>
+
+        <div class="about-layout">
+          <div class="about-card">
+            <p>
+              <strong>KYTE</strong> operates as a creative agency, talent roster and production partner.
+              We work closely with artists, writers, models and creators to build sustainable careers —
+              and with brands and platforms to deliver work that actually lands with real audiences.
+            </p>
+            <p style="margin-top:10px;">
+              Our team is comfortable in the details: contracts, rights, schedules and deliverables —
+              and in the big picture: stories, positioning and long-term brand–talent relationships.
+            </p>
+            <p style="margin-top:10px;">
+              <strong>Based in Seoul</strong> with a network across Korea, wider Asia-Pacific and Europe,
+              KYTE supports projects that cross languages, time zones and cultures.
+            </p>
+
+            <div class="about-meta">
+              <div class="about-pill">
+                <span>HQ</span>
+                <span>Seoul, South Korea</span>
+              </div>
+              <div class="about-pill">
+                <span>Regions</span>
+                <span>APAC · EU</span>
+              </div>
+              <div class="about-pill">
+                <span>Languages</span>
+                <span>KR · EN · DE · VN</span>
+              </div>
+              <div class="about-pill">
+                <span>Specialty</span>
+                <span>Cross-border campaigns</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="client-logos">
+            <div>Selected partners & platforms (examples – replace with real logos):</div>
+            <div class="client-logos-row">
+              <div class="client-logo-chip">Streaming / Tech</div>
+              <div class="client-logo-chip">Fashion / Lifestyle</div>
+              <div class="client-logo-chip">Media / TV</div>
+              <div class="client-logo-chip">Agencies & Labels</div>
+            </div>
+            <div style="margin-top:12px; font-size:11px;">
+              Add client logos here as inline SVGs or images once you’re ready to go public with them.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="shell">
+        <div class="section-header">
+          <div class="section-title">
+            <span class="sub">Contact</span>
+            Let’s talk about your next campaign.
+            <span class="kr">프로젝트·캠페인 문의</span>
+          </div>
+          <div class="section-description">
+            Share a brief about your project, timeline and markets.
+            We’ll come back with roster options, ballpark budget and next steps.
+          </div>
+        </div>
+
+        <div class="contact-layout">
+          <div class="contact-card">
+            <!-- You can connect this form via Formspree, Netlify Forms, etc. -->
+            <form method="post" action="https://example.com/your-form-endpoint">
+              <div class="contact-form-row">
+                <div class="field">
+                  <label for="name">Name</label>
+                  <input id="name" name="name" type="text" placeholder="Your name" required />
+                </div>
+                <div class="field">
+                  <label for="company">Company / Brand</label>
+                  <input id="company" name="company" type="text" placeholder="Company or project name" />
+                </div>
+              </div>
+
+              <div class="field">
+                <label for="email">Email</label>
+                <input id="email" name="email" type="email" placeholder="you@company.com" required />
+              </div>
+
+              <div class="field">
+                <label for="markets">Markets & timeline</label>
+                <input id="markets" name="markets" type="text" placeholder="e.g. KR + SEA · Q2 launch" />
+              </div>
+
+              <div class="field">
+                <label for="message">Project details</label>
+                <textarea id="message" name="message" rows="4" placeholder="Share a short brief, deliverables, budget range, etc."></textarea>
+              </div>
+
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-top:8px;">
+                <div style="font-size:11px; color:var(--muted);">
+                  By submitting, you agree that KYTE may contact you about this project.
+                </div>
+                <button type="submit" class="btn btn-primary">
+                  Send enquiry
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="contact-card">
+            <div class="contact-meta">
+              Prefer email or DM? Reach out directly — especially for time-sensitive campaigns or castings.
+            </div>
+            <ul class="contact-list">
+              <!-- Replace placeholders with real info -->
+              <li><strong>Email:</strong> hello@kyte.kr</li>
+              <li><strong>General:</strong> info@kyte.kr</li>
+              <li><strong>Base:</strong> Seoul, South Korea</li>
+            </ul>
+
+            <div class="contact-meta">
+              For music, publishing or specialised projects, we can loop in additional partners through our network across Asia and Europe.
+            </div>
+
+            <div class="contact-meta">
+              Follow KYTE:
+            </div>
+            <div class="contact-social">
+              <!-- Link to your Linktree or individual socials -->
+              <a href="https://kyte.kr" target="_blank" rel="noopener">Link hub</a>
+              <a href="#" target="_blank" rel="noopener">Instagram</a>
+              <a href="#" target="_blank" rel="noopener">TikTok</a>
+              <a href="#" target="_blank" rel="noopener">LinkedIn</a>
+              <a href="#" target="_blank" rel="noopener">YouTube</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="shell">
+      <div class="footer-inner">
+        <div>© <span id="year"></span> KYTE Co., Ltd. All rights reserved.</div>
+        <div class="footer-links">
+          <a href="#top">Back to top ↑</a>
+          <a href="#">Imprint</a>
+          <a href="#">Privacy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // Mobile nav toggle
+  const navToggle = document.getElementById("navToggle");
+  const navMobile = document.getElementById("navMobile");
+  if (navToggle && navMobile) {
+    navToggle.addEventListener("click", () => {
+      navMobile.classList.toggle("open");
+    });
+
+    navMobile.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => navMobile.classList.remove("open"));
+    });
+  }
+
+  // Current year in footer
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
